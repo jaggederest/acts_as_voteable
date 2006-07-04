@@ -6,7 +6,7 @@ class Vote < ActiveRecord::Base
   def self.find_votes_cast_by_user(user)
     find(:all,
       :conditions => ["user_id = ?", user.id],
-      :order => "submitted DESC"
+      :order => "created_at DESC"
     )
   end
 end

@@ -4,7 +4,7 @@ module Juixe
     module Voteable #:nodoc:
 
       def self.included(base)
-        base.extend ClassMethods  
+        base.extend ClassMethods
       end
 
       module ClassMethods
@@ -21,7 +21,7 @@ module Juixe
           voteable = ActiveRecord::Base.send(:class_name_of_active_record_descendant, self).to_s
           Vote.find(:all,
             :conditions => ["user_id = ? and voteable_type = ?", user.id, voteable],
-            :order => "submitted DESC"
+            :order => "created_at DESC"
           )
         end
       end
@@ -59,11 +59,13 @@ module Juixe
         
         def voted_by_user?(user)
           rtn = false
-          self.votes.each { |v|
-            rtn = true if user.id == v.user.id
-          }
+          if user
+            self.votes.each { |v|
+              rtn = true if user.id == v.user_id
+            }
+          end
           rtn
-        end        
+        end
       end
     end
   end
