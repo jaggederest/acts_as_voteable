@@ -9,7 +9,7 @@ module Juixe
 
       module ClassMethods
         def acts_as_voteable
-          has_many :votes, :as => :voteable, :dependent => true
+          has_many :votes, :as => :voteable, :dependent => :destroy
           include Juixe::Acts::Voteable::InstanceMethods
           extend Juixe::Acts::Voteable::SingletonMethods
         end
